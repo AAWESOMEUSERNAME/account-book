@@ -4,6 +4,14 @@
   "rules": {
     "prettier/prettier": "off",
     "semi": "off",
-    "no-unused-vars": ["warn",{ "vars": "all", "args": "after-used", "ignoreRestSiblings": true }]
+    "no-unused-vars": [
+      "warn",
+      {
+        "vars": "all",
+        "args": "after-used",
+        "ignoreRestSiblings": true
+      }
+    ],
+    "comma-dangle": "off"
   }
 }
