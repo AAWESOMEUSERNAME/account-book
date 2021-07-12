@@ -6818,6 +6818,11 @@ invariant@^2.2.3, invariant@^2.2.4:
   dependencies:
     loose-envify "^1.0.0"
 
+inversify@^5.1.1:
+  version "5.1.1"
+  resolved "https://registry.nlark.com/inversify/download/inversify-5.1.1.tgz#6fbd668c591337404e005a1946bfe0d802c08730"
+  integrity sha1-b71mjFkTN0BOAFoZRr/g2ALAhzA=
+
 ip@^1.1.4, ip@^1.1.5:
   version "1.1.5"
   resolved "https://registry.nlark.com/ip/download/ip-1.1.5.tgz#bdded70114290828c0a039e72ef25f5aaec4354a"
@@ -10393,6 +10398,11 @@ recursive-readdir@2.2.2:
   integrity sha1-mUb7MnThYo3m42svZxSVO0hFCU8=
   dependencies:
     minimatch "3.0.4"
+
+reflect-metadata@^0.1.13:
+  version "0.1.13"
+  resolved "https://registry.nlark.com/reflect-metadata/download/reflect-metadata-0.1.13.tgz#67ae3ca57c972a2aa1642b10fe363fe32d49dc08"
+  integrity sha1-Z648pXyXKiqhZCsQ/jY/4y1J3Ag=
 
 refractor@^2.4.1:
   version "2.10.1"

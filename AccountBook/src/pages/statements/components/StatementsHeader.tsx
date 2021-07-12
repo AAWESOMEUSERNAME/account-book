@@ -1,5 +1,5 @@
 import React from 'react'
-import {StyleSheet, TouchableWithoutFeedback, View} from 'react-native'
+import {Pressable, StyleSheet, View} from 'react-native'
 import DateCard from './DateCard'
 import {BigText, SmallText} from '../../../components/Text'
 import {TwoColumnsContainer} from '../layout'
@@ -14,13 +14,13 @@ const styles = StyleSheet.create({
 })
 
 const Right: React.FC<{ onPressBudget: () => void, budget?: [number, number] }> = ({budget, onPressBudget}) => {
-  return <TouchableWithoutFeedback onPress={onPressBudget}>
+  return <Pressable onPress={onPressBudget}>
     <View style={styles.right}>
       {budget && <SmallText>预算剩余/储蓄缺口</SmallText>}
       {budget && <BigText>{budget[0].toFixed(2)}/{budget[1].toFixed(2)}</BigText>}
       {!budget && <BigText>点击初始化本月预算</BigText>}
     </View>
-  </TouchableWithoutFeedback>
+  </Pressable>
 }
 
 const Header: React.FC<StatementsHeaderProps> = ({year, month, budget, onPressBudget}) => {
