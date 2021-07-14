@@ -1,4 +1,4 @@
-import {StyleSheet, View} from 'react-native'
+import {StyleSheet, View, ViewProps} from 'react-native'
 import React, {ReactElement} from 'react'
 
 const styles = StyleSheet.create({
@@ -14,8 +14,8 @@ const styles = StyleSheet.create({
   }
 })
 
-export const TwoColumnsContainer: React.FC<TwoColumnsContainerProps> = (props) => {
-  return <View style={styles.container}>
+export const TwoColumnsContainer: React.FC<TwoColumnsContainerProps & ViewProps> = (props) => {
+  return <View style={[styles.container,props.style]}>
     <View style={styles.left}>{props.left}</View>
     <View style={styles.right}>{props.right}</View>
   </View>

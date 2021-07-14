@@ -12,6 +12,7 @@
         "ignoreRestSiblings": true
       }
     ],
-    "comma-dangle": "off"
+    "comma-dangle": "off",
+    "react-hooks/exhaustive-deps": "off"
   }
 }

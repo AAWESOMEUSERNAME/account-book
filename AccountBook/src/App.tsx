@@ -8,12 +8,12 @@
  * @format
  */
 
+import 'reflect-metadata'
 import React from 'react';
 import 'react-native-gesture-handler';
 import {NavigationContainer} from '@react-navigation/native';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import Config from 'react-native-config'
-import StorybookUI from '../storybook'
 
 import AccountPage from './pages/accounts';
 import StatementsPage from './pages/statements';
@@ -64,4 +64,4 @@ const App = () => {
   );
 };
 
-export default Config.LOAD_STORYBOOK === 'true' ? StorybookUI : App;
+export default App;

@@ -1,6 +1,7 @@
 import {StatementType} from '../constants'
 
 interface Statement {
+  id: number
   sum: number
   createAt: Date
   tags: Tag[]

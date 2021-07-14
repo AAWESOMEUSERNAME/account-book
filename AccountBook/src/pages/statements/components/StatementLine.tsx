@@ -104,7 +104,7 @@ const StatementLine: React.FC<StatementLineProps> = (props) => {
 }
 
 export interface StatementLineProps {
-  withDay: boolean
+  withDay?: boolean
   statement: PreStatement | NormalStatement | DepositStatement
 }
 
