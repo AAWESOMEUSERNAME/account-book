@@ -6,8 +6,8 @@ import {StatementType} from '../constants'
 
 @injectable()
 export class StatementsServiceImpl implements StatementsService {
-  async fetchMonthStatements(year: number, month: number, day?: number, keyword?: string): Promise<AnyStatement[]> {
-    console.log('run fetch')
+  async fetchMonthStatements(size: number, page: number, keyword?: string): Promise<AnyStatement[]> {
+    console.log('run fetch',size,page,keyword)
     return []
   }
 }

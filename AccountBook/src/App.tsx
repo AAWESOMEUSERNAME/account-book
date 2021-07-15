@@ -32,10 +32,21 @@ import {
 
 
 const Tab = createBottomTabNavigator();
+const MyTheme = {
+  dark: false,
+  colors: {
+    primary: 'rgb(255, 45, 85)',
+    background: theme.color.white,
+    card: 'rgb(255, 255, 255)',
+    text: 'rgb(28, 28, 30)',
+    border: 'rgb(199, 199, 204)',
+    notification: 'rgb(255, 69, 58)',
+  },
+};
 
 const App = () => {
   return (
-    <NavigationContainer>
+    <NavigationContainer theme={MyTheme}>
       <Tab.Navigator initialRouteName={page_name.statements} screenOptions={({route}) => ({
         tabBarIcon: ({focused}) => {
           switch (route.name) {

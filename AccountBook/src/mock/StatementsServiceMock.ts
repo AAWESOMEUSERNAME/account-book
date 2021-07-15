@@ -37,18 +37,33 @@ const depositStatement: DepositStatement = {
   type: StatementType.deposit
 }
 
+const data: AnyStatement[] = [
+  {...preStatement} as PreStatement,
+  {...normalStatement} as NormalStatement,
+  {...normalStatement, direction: 'out'} as NormalStatement,
+  {...depositStatement} as DepositStatement,
+  {...preStatement, createAt: new Date(2021, 5, 10)} as PreStatement,
+  {...normalStatement, createAt: new Date(2021, 5, 8)} as NormalStatement,
+  {...normalStatement, createAt: new Date(2021, 5, 8)} as NormalStatement,
+  {...normalStatement, createAt: new Date(2021, 5, 8)} as NormalStatement,
+  {...depositStatement, createAt: new Date(2021, 4, 10)} as DepositStatement,
+  {...depositStatement, createAt: new Date(2021, 4, 10)} as DepositStatement,
+  {...normalStatement, createAt: new Date(2021, 4, 6)} as NormalStatement,
+  {...normalStatement, createAt: new Date(2021, 3, 6)} as NormalStatement
+].map((value, index) => {
+  value.id = index
+  return value
+})
+
 @injectable()
 export class StatementsServiceMock implements StatementsService {
-  async fetchMonthStatements(year: number, month: number, day?: number, keyword?: string): Promise<AnyStatement[]> {
-    const current = moment()
-    if (current.year() === year && current.month() + 1 === month) {
-      return [
-        {...preStatement, id: 0},
-        {...normalStatement, id: 1},
-        {...normalStatement, id: 2, direction: 'out'},
-        {...depositStatement, id: 3}
-      ]
+  async fetchMonthStatements(size: number, page: number, keyword?: string): Promise<AnyStatement[]> {
+    console.log('size',size)
+    console.log('page',page)
+    const start = size * (page - 1)
+    if (!data[start]) {
+      return []
     }
-    return []
+    return data.slice(start, start + size > data.length - 1 ? undefined : start + size)
   }
 }

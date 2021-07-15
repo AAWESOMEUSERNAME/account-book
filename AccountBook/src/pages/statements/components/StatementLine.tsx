@@ -32,6 +32,10 @@ const statementStyles = StyleSheet.create({
     width: 230,
     borderBottomWidth: 1,
   },
+  longLine: {
+    width: 250,
+    left: -20
+  },
   lightLine: {
     borderBottomColor: theme.color.main.light
   },
@@ -39,21 +43,12 @@ const statementStyles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'flex-end',
     alignItems: 'center',
-    paddingTop: 17.5,
-    paddingBottom: 15,
+    paddingTop: 30.5,
+    paddingRight: 25
   },
-  dayCardWord: {
-    top: 7
-  },
-  dayCardLine: {
-    height: 23,
-    width: 21,
-    borderBottomWidth: 1,
-    marginLeft: 8,
-  }
 })
 
-const StatementBody: React.FC<(PreStatement | NormalStatement | DepositStatement)> = (props) => {
+const StatementBody: React.FC<(PreStatement | NormalStatement | DepositStatement) & { withDay?: boolean }> = (props) => {
   let lightLine: boolean = false
   let Waring: ReactElement | undefined
   let onPress: () => void = () => console.log('press')
@@ -75,7 +70,8 @@ const StatementBody: React.FC<(PreStatement | NormalStatement | DepositStatement
         <NormalText style={statementStyles.tag}
                     numberOfLines={1}>{props.tags.map(value => value.name).join(',')}</NormalText>
       </View>
-      <View style={[statementStyles.line, lightLine ? statementStyles.lightLine : {}]}/>
+      <View
+        style={[statementStyles.line, lightLine ? statementStyles.lightLine : {}, props.withDay ? statementStyles.longLine : {}]}/>
       <View style={statementStyles.detail}>
         <NormalText>{props.accountName}</NormalText>
         <SmallText>{props.comment}</SmallText>
@@ -88,12 +84,11 @@ const StatementLine: React.FC<StatementLineProps> = (props) => {
   const {withDay, statement} = props
   const {createAt} = statement
   let Left: ReactElement | undefined
-  const Right: ReactElement = <StatementBody {...statement}/>
+  const Right: ReactElement = <StatementBody {...statement} withDay={withDay}/>
 
   if (withDay) {
     Left = <View style={statementStyles.dayCard}>
-      <NormalText style={statementStyles.dayCardWord}>{createAt.getDay()}日</NormalText>
-      <View><View style={statementStyles.dayCardLine}/></View>
+      <NormalText>{createAt.getDay()}日</NormalText>
     </View>
   }
 
