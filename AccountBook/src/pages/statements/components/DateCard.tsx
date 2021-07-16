@@ -2,7 +2,6 @@ import React from 'react'
 import {StyleProp, StyleSheet, View, ViewStyle} from 'react-native'
 import {NormalText} from '../../../components/Text'
 import {theme} from '../../../config'
-import {TwoColumnsContainer} from '../layout'
 
 const styles = StyleSheet.create({
   container: {
@@ -23,9 +22,6 @@ const DataCard = (props: DateCardProps) => {
     <NormalText>{props.month}月</NormalText>
   </View>
 }
-
-export const DateCardLine: React.FC<DateCardProps> = (props) =>
-  <TwoColumnsContainer left={<DataCard {...props}/>}/>
 
 export default DataCard
 

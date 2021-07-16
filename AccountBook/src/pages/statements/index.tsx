@@ -1,12 +1,14 @@
-import React, {ReactElement, useCallback, useEffect, useState} from 'react';
+import React, {useCallback, useEffect, useState} from 'react'
 import moment from 'moment'
-import {FlatList, StyleSheet, Text, View, ViewToken} from 'react-native';
-import StatementsHeader from './components/StatementsHeader';
+import {FlatList, StyleSheet, View, ViewToken} from 'react-native'
+import StatementsHeader from './components/StatementsHeader'
+import AddStatementButton from './components/AddStatementBottun'
 import {statementsService} from '../../utils/container'
-import DateCard, {DateCardLine} from './components/DateCard'
+import DateCard from './components/DateCard'
 import StatementLine from './components/StatementLine'
 import {AnyStatement} from '../../types/services'
-import {StatementAssert} from '../../utils/typeUtils'
+import {BigText} from '../../components/Text'
+import Mask from '../../components/Mask'
 
 const styles = StyleSheet.create({
   container: {
@@ -22,6 +24,12 @@ const styles = StyleSheet.create({
   },
   dataCard: {
     borderTopWidth: 1
+  },
+  addButton: {
+    position: 'absolute',
+    right: 30,
+    bottom: 30,
+    zIndex: 2,
   }
 })
 
@@ -48,10 +56,12 @@ const StatementsPage: React.FC = () => {
   useEffect(() => fetchPageData(), [page])
   const onViewChange = useCallback((info: { viewableItems: Array<ViewToken>; changed: Array<ViewToken> }) => {
     const {viewableItems} = info
-    const firstStatement = viewableItems.filter(value => StatementAssert.isStatement(value.item))
-      .map(value => value.item as AnyStatement)[0]
-    setMonth(firstStatement.createAt.getMonth() + 1)
-    setYear(firstStatement.createAt.getFullYear())
+    const first = viewableItems.find(value => value.key.match(/^line-.+/))?.item
+    if (first) {
+      const createAt = (first as AnyStatement).createAt;
+      setMonth(createAt.getMonth() + 1)
+      setYear(createAt.getFullYear())
+    }
   }, [setYear, setMonth])
 
   const fetchPageData = () => {
@@ -99,7 +109,9 @@ const StatementsPage: React.FC = () => {
   }
 
   return <>
+    <Mask><BigText>test</BigText></Mask>
     <View style={styles.timeline}/>
+    <AddStatementButton style={styles.addButton}/>
     <StatementsHeader year={year} month={month}
                       onPressBudget={handlePressOnBudget}/>
     <FlatList style={styles.container}
@@ -113,12 +125,11 @@ const StatementsPage: React.FC = () => {
               }}
               keyExtractor={(item) => {
                 if (item instanceof DateData) {
-                  return `${item.month}-${item.year}`
+                  return `data-${item.month}-${item.year}`
                 }
                 return `line-${item.id}`
               }}
               onEndReached={hasMore ? () => {
-                console.log('reached')
                 setPage(page + 1)
               } : null}
               onViewableItemsChanged={onViewChange}
