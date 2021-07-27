@@ -1,8 +1,7 @@
 import {injectable} from 'inversify'
 import {AnyStatement, StatementsService} from '../types/services'
-import {DepositStatement, NormalStatement, PreStatement, Statement} from '../types/domain'
+import {DepositStatement, NormalStatement, PreStatement, Statement, TagGroup} from '../types/domain'
 import {StatementType} from '../constants'
-import moment from 'moment'
 
 const baseStatement: Statement = {
   id: 0,
@@ -37,7 +36,7 @@ const depositStatement: DepositStatement = {
   type: StatementType.deposit
 }
 
-const data: AnyStatement[] = [
+const statements: AnyStatement[] = [
   {...preStatement} as PreStatement,
   {...normalStatement} as NormalStatement,
   {...normalStatement, direction: 'out'} as NormalStatement,
@@ -55,15 +54,34 @@ const data: AnyStatement[] = [
   return value
 })
 
+const tagGroups: TagGroup[] = [
+  {
+    id: 0, name: '组1', tags: [
+      {id: 0, name: '标签1'},
+      {id: 1, name: '标签2'},
+      {id: 2, name: '标签3'},
+    ],
+  },
+  {
+    id: 1, name: '组2', tags: [
+      {id: 3, name: '标签4'},
+      {id: 4, name: '标签5'}
+    ]
+  }
+]
+
 @injectable()
 export class StatementsServiceMock implements StatementsService {
+  async fetchStatementTags(): Promise<TagGroup[]> {
+    return tagGroups
+  }
+
   async fetchMonthStatements(size: number, page: number, keyword?: string): Promise<AnyStatement[]> {
-    console.log('size',size)
-    console.log('page',page)
+    console.log(`mock fetch, size: ${size}, page: ${page}, keyword: ${keyword}`)
     const start = size * (page - 1)
-    if (!data[start]) {
+    if (!statements[start]) {
       return []
     }
-    return data.slice(start, start + size > data.length - 1 ? undefined : start + size)
+    return statements.slice(start, start + size > statements.length - 1 ? undefined : start + size)
   }
 }

@@ -1,6 +1,6 @@
 import React, {useCallback, useEffect, useState} from 'react'
 import moment from 'moment'
-import {FlatList, StyleSheet, View, ViewToken} from 'react-native'
+import {FlatList, Pressable, StyleSheet, View, ViewToken, Modal} from 'react-native'
 import StatementsHeader from './components/StatementsHeader'
 import AddStatementButton from './components/AddStatementBottun'
 import {statementsService} from '../../utils/container'
@@ -8,7 +8,8 @@ import DateCard from './components/DateCard'
 import StatementLine from './components/StatementLine'
 import {AnyStatement} from '../../types/services'
 import {BigText} from '../../components/Text'
-import Mask from '../../components/Mask'
+import Select from './components/StatementTypesSelector'
+
 
 const styles = StyleSheet.create({
   container: {
@@ -52,6 +53,8 @@ const StatementsPage: React.FC = () => {
   const [hasMore, setHasMore] = useState(true)
   const pageSize = 5
   const [data, setData] = useState<((AnyStatement & { withDay?: boolean }) | DateData)[]>([]);
+
+  const [showSelector, setShowSelector] = useState(false)
 
   useEffect(() => fetchPageData(), [page])
   const onViewChange = useCallback((info: { viewableItems: Array<ViewToken>; changed: Array<ViewToken> }) => {
@@ -109,9 +112,10 @@ const StatementsPage: React.FC = () => {
   }
 
   return <>
-    <Mask><BigText>test</BigText></Mask>
+    {showSelector && <Select visible={showSelector} onClose={() => setShowSelector(false)}/>}
     <View style={styles.timeline}/>
-    <AddStatementButton style={styles.addButton}/>
+    <AddStatementButton style={styles.addButton} onPressStatement={() => setShowSelector(true)}
+                        onPressTransfer={() => console.log('show transfer')}/>
     <StatementsHeader year={year} month={month}
                       onPressBudget={handlePressOnBudget}/>
     <FlatList style={styles.container}

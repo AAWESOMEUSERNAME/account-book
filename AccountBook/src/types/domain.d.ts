@@ -28,6 +28,11 @@ interface PreStatement extends Statement {
   paid: boolean
 }
 
+interface TagGroup {
+  id: number
+  name: string
+  tags: Tag[]
+}
 
 interface Tag {
   id: number

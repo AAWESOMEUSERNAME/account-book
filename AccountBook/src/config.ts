@@ -1,7 +1,3 @@
-export const global_config = {
-  enableMock: true
-}
-
 export const page_name = {
   statements: 'statements',
   accounts: 'accounts',
@@ -37,4 +33,8 @@ export const theme = {
       normal: 20,
     }
   },
+}
+
+export const global_config = {
+  enableMock: true,
 }
